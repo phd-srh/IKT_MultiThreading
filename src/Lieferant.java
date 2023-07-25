@@ -8,7 +8,10 @@ public class Lieferant extends Thread {
     @Override
     public void run() {
         for (int i = 0; i < 500_000; i++) {
-            lager.beliefern(1);
+            //lager.beliefern(1);
+            synchronized (lager) {
+                lager.setBestand(lager.getBestand() + 1);
+            }
         }
     }
 }
