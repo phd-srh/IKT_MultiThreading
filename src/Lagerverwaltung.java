@@ -1,5 +1,5 @@
 public class Lagerverwaltung {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Lager lager = new Lager(0);
         Lieferant lieferant1 = new Lieferant(lager);
         Lieferant lieferant2 = new Lieferant(lager);
