@@ -38,5 +38,21 @@ public class MTAufgabe {
         System.out.println("Summenwert des Arrays: " + summe);
         zeit = (System.nanoTime() - zeit) / 1000;
         System.out.println("Berechnet in " + zeit + "µs");
+
+        // Gleiche Aufgabe, jetzt mit mehreren Threads und Callback (CB)
+        zeit = System.nanoTime();
+        ResultHandler resultHandler = new ResultHandler(NUM_WORKERS);
+        SummenWorkerCB[] cbworker = new SummenWorkerCB[ NUM_WORKERS ];
+        start = 0;
+        for (int i=0; i<NUM_WORKERS; i++) {
+            cbworker[i] = new SummenWorkerCB(int_array, start,
+                    start+elementeProThread, resultHandler);
+            cbworker[i].start();
+            start += elementeProThread;
+        }
+
+        // wann dürfen wir die Zeit stoppen?
+        zeit = (resultHandler.getZeitStempel() - zeit) / 1000;
+        System.out.println("Berechnet in " + zeit + "µs");
     }
 }
