@@ -1,6 +1,6 @@
 public class MTAufgabe {
-    private static final int ARRAY_SIZE = 10_000_000;
-    private static final int NUM_WORKERS = 5;
+    private static final int ARRAY_SIZE = 50_000_000;
+    private static final int NUM_WORKERS = 8;
 
     public static void main(String[] args) {
         int[] int_array = new int[ ARRAY_SIZE ];
@@ -12,13 +12,14 @@ public class MTAufgabe {
 
         long zeit = System.nanoTime();
         // Aufgabe
-        int summe = 0;
+        long summe = 0;
         for (int element : int_array) summe += element;
         System.out.println("Summenwert des Arrays: " + summe);
         zeit = (System.nanoTime() - zeit) / 1000;
         System.out.println("Berechnet in " + zeit + "µs");
 
         // Gleiche Aufgabe, jetzt mit mehreren Threads
+        zeit = System.nanoTime();
         SummenWorker[] worker = new SummenWorker[ NUM_WORKERS ];
         int start = 0;
         int elementeProThread = ARRAY_SIZE / NUM_WORKERS;
@@ -35,5 +36,7 @@ public class MTAufgabe {
             summe += w.getErgebnis();
         }
         System.out.println("Summenwert des Arrays: " + summe);
+        zeit = (System.nanoTime() - zeit) / 1000;
+        System.out.println("Berechnet in " + zeit + "µs");
     }
 }
